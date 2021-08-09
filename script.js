@@ -3,9 +3,20 @@ let timeLeft =  document.querySelector("#time")
 let falseBtn = document.querySelector("#falseBtn")
 let trueBtn = document.querySelector("#trueBtn")
 let questionEl = document.querySelector("#question")
-
+let highscoreEl = document.querySelector("#highscore")
+let initialsEl = document.querySelector("#initials")
+let formInitials = document.querySelector("#formInitials")
+let highscoreName = document.getElementById("#highscoreNames")
+let highscoreScore = document.getElementById("#highscoreScore")
+let highscoreBtn = document.createElement("button")
 let score = 0
 let timer = 60
+let currentQuestion = 0
+
+trueBtn.disabled = true;
+falseBtn.disabled = true;
+initialsEl.style.display = "none";
+
 
 let quizQuestions = ["Are apples red",
 "Do dogs have 6 legs",
@@ -17,11 +28,6 @@ let quizQuestions = ["Are apples red",
 "Squid have 10 tentacles",
 "Tennis balls are green",
 "People have 4 eyes"]
-
-let currentQuestion = 0
-
-trueBtn.disabled = true;
-falseBtn.disabled = true;
 
 function countdown() {
 
@@ -51,14 +57,12 @@ function nextQuestion(){
 function endGame(){
     trueBtn.disabled = true;
     falseBtn.disabled = true;
-
+    initialsEl.style.display = "block";
     questionEl.textContent = "Game over! Score: " + score
+    
+    highscoreBtn.innerHTML = "Submit"
 
-    let highscoreBtn = document.createElement ("button");
-
-    highscoreBtn.innrerHTML = "Highscores";
-
-    document.questionEl.appendChild(highscoreBtn)
+    formInitials.appendChild(highscoreBtn)
 }
 
 startBtn.addEventListener("click", function(){
@@ -106,6 +110,28 @@ falseBtn.addEventListener("click", function(){
     }
 })
 
-// steps
-// display questions in array
-// have function pick each question out of array one at a time
+highscoreBtn.addEventListener("click", function(event){
+    event.preventDefault();
+    let savedHighscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
+    let currentUser = initialInput.value.trim();
+    let currentHighscore = {
+        name: currentUser, 
+        score: score
+    };
+
+    savedHighscores.push(currentHighscore);
+    localStorage.setItem("savedHighscores", JSON.stringify(savedHighscores));
+    generateHighscores();
+})
+
+function generateHighscores(){
+    let highscores = JSON.parse(localStorage.getItem("savedHighscores")) || [];
+    for (i=0; i<highscores.length; i++){
+        let nameSpan = document.createElement("li");
+        let scoreSpan = document.createElement("li");
+        nameSpan.textContent = highscores[i].name;
+        scoreSpan.textContent = highscores[i].score;
+        highscoreName.appendChild(nameSpan);
+        highscoreScore.appendChild(scorespan);
+    }
+}
