@@ -21,16 +21,16 @@ initialsEl.style.display = "none";
 displayScores();
 
 
-let quizQuestions = ["Are apples red",
-"Do dogs have 6 legs",
-"2+2=4",
-"Dogs have 2 ears",
-"Water is a liquid",
-"Orange is a color",
-"Cows can bark",
-"Squid have 10 tentacles",
-"Tennis balls are green",
-"People have 4 eyes"]
+let quizQuestions = ["Dogs have 4 legs",
+"Dogs can only see in black and white",
+"Pomeranians are the smallest dog breed",
+"Grapes are poisonous to dogs",
+"Dogs sweat through their paws",
+"Sit is the most taught trainging command to dogs",
+"Chow chow dogs have a pink tongue",
+"Dalmations are born with spots",
+"A dog's most highly developed sense is their smell",
+"Normal adult dogs have 24 teeth"]
 
 function countdown() {
     let timerInterval = setInterval(function() {
@@ -138,7 +138,8 @@ trueBtn.addEventListener("click", function(){
         questionEl.textContent === quizQuestions[7]){
         timer = timer - 5
         nextQuestion();
-    } else {
+    } else if (questionEl.textContent === quizQuestions[9]) {
+        timer = timer - 5
         endGame();
     }
 })
@@ -158,7 +159,8 @@ falseBtn.addEventListener("click", function(){
         questionEl.textContent === quizQuestions[8]){
         timer = timer - 5
         nextQuestion();
-    } else {
+    } else if (questionEl.textContent === quizQuestions[9]){
+        score = score + 10;
         endGame();
     }
 })
